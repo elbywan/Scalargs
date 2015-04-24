@@ -6,8 +6,12 @@ branches:
       - master
       - dev
 
+before_install:
+    - openssl aes-256-cbc -K $encrypted_b8cdeee79ec1_key -iv $encrypted_b8cdeee79ec1_iv -in sonatype.sbt.enc -out ~/.sbt/0.13/sonatype.sbt -d
+
 script:
     - sbt ++$TRAVIS_SCALA_VERSION clean coverage test
 
 after_success:
     - sbt ++$TRAVIS_SCALA_VERSION coveralls
+    - test $TRAVIS_PULL_REQUEST == "false" && test $TRAVIS_BRANCH == "master" && sbt publish

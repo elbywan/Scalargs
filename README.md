@@ -8,10 +8,12 @@ It automatically validates or rejects arguments given a configuration you specif
 
 ##Installation
 
-Build it with sbt :
+Get it with sbt :
 
-```bash
-sbt publishLocal
+```scala
+resolvers += Resolver.sonatypeRepo("snapshots")
+
+libraryDependencies += "com.github.elbywan" %% "scalargs" % "0.1-SNAPSHOT"
 ```
 
 To play around with the library, type `sbt console`.

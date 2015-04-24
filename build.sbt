@@ -21,8 +21,8 @@ pomExtra :=
         </license>
     </licenses>
     <scm>
-        <url>git@github.com:elbywan/scalargs.git</url>
-        <connection>scm:git:git@github.com:elbywan/scalargs.git</connection>
+        <url>git@github.com:elbywan/Scalargs.git</url>
+        <connection>scm:git:git@github.com:elbywan/Scalargs.git</connection>
     </scm>
     <developers>
         <developer>
