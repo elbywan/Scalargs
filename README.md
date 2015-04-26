@@ -58,8 +58,8 @@ val prog = program("Program name") title "- Just a demo" usage "Pass some argume
 )
 
 val args = prog from Array("--name", "Igor", "-a", "25")
-val name = args("name").getOrElse("")
-val age = args("age").getOrElse(0)
+val name = args("name")
+val age = args("age")
 println(s"Hey $name, are you really $age years old ?")
 
 prog from Array("--help")

@@ -44,14 +44,14 @@ class ArgsTest extends FlatSpec with Matchers {
     it should "[Extensive conf.] Validate and parse long arguments properly" in {
         val outputStream = new java.io.ByteArrayOutputStream()
 
-        var arguments: Map[String, Option[_]] = Map()
+        var arguments: Map[String, Any] = Map()
         Console.withOut(outputStream) {
             arguments = programConfiguration from validLongArgs
         }
 
-        arguments("name").getOrElse("") should equal ("TOTO")
-        arguments("age").getOrElse(0) should equal (20)
-        arguments("greet") should equal (None)
+        arguments("name") should equal ("TOTO")
+        arguments("age") should equal (20)
+        arguments("greet") should equal ("")
         arguments should not contain ("x")
 
         outputStream.toString should equal(
@@ -64,14 +64,14 @@ class ArgsTest extends FlatSpec with Matchers {
     it should "[Extensive conf.] Validate and parse short arguments properly" in {
         val outputStream = new java.io.ByteArrayOutputStream()
 
-        var arguments: Map[String, Option[_]] = Map()
+        var arguments: Map[String, Any] = Map()
         Console.withOut(outputStream) {
             arguments = programConfiguration from validShortArgs
         }
 
-        arguments("name").getOrElse("") should equal ("TOTO")
-        arguments("age").getOrElse(0)  should equal (20)
-        arguments("x") should equal (None)
+        arguments("name") should equal ("TOTO")
+        arguments("age")  should equal (20)
+        arguments("x") should equal ("")
         arguments should not contain ("greet")
 
         outputStream.toString should equal(
@@ -84,7 +84,7 @@ class ArgsTest extends FlatSpec with Matchers {
         val nullStream = new java.io.ByteArrayOutputStream()
 
         Console.withOut(nullStream) {
-            var arguments: Map[String, Option[_]] = Map()
+            var arguments: Map[String, Any] = Map()
             an[IllegalArgumentException] should be thrownBy {
                 arguments = programConfiguration from invalidEmpty
             }
@@ -140,7 +140,7 @@ class ArgsTest extends FlatSpec with Matchers {
 
     it should "[Minimal conf.] Validate minimal config." in {
         (minimalConfiguration from Array("--argument", "this is the argument's value"))("argument") should equal {
-            Some("this is the argument's value")
+            "this is the argument's value"
         }
     }
 

@@ -126,7 +126,7 @@ case class Program(name: String, titleDesc: String = "", longDesc: String = "", 
 
     /**
      * Launches the parsing form the String argument array passed as a parameter.
-     * @param strArgs Agrument array.
+     * @param strArgs Argument array.
      * @return An argument Map of the form [Name -> Value]
      */
     def from(strArgs: Array[String]) = {
@@ -180,7 +180,7 @@ case class Program(name: String, titleDesc: String = "", longDesc: String = "", 
         }
 
         @tailrec
-        def parseArgs(arr: List[String], accumulator: Map[String, Option[_]]): Map[String, Option[_]] = {
+        def parseArgs(arr: List[String], accumulator: Map[String, Any]): Map[String, Any] = {
             arr match {
                 case item :: next :: tail => {
                     matchArg(args, item) match {
@@ -189,10 +189,10 @@ case class Program(name: String, titleDesc: String = "", longDesc: String = "", 
                         case Some(argumentObj) =>
                             if (argumentObj.isEmpty()) {
                                 applyAction(argumentObj, scala.runtime.BoxedUnit.UNIT)
-                                parseArgs(next :: tail, accumulator + (argumentObj.getName -> None))
+                                parseArgs(next :: tail, accumulator + (argumentObj.getName -> ""))
                             } else {
                                 applyAction(argumentObj, argumentObj.convert(next))
-                                parseArgs(tail, accumulator + (argumentObj.getName -> Some(argumentObj.convert(next))))
+                                parseArgs(tail, accumulator + (argumentObj.getName -> argumentObj.convert(next)))
                             }
                     }
                 }
@@ -203,7 +203,7 @@ case class Program(name: String, titleDesc: String = "", longDesc: String = "", 
                         case Some(argumentObj) =>
                             if (argumentObj.isEmpty()) {
                                 applyAction(argumentObj, scala.runtime.BoxedUnit.UNIT)
-                                parseArgs(tail, accumulator + (argumentObj.getName -> None))
+                                parseArgs(tail, accumulator + (argumentObj.getName -> ""))
                             } else
                                 parseArgs(tail, accumulator)
                     }
@@ -216,7 +216,7 @@ case class Program(name: String, titleDesc: String = "", longDesc: String = "", 
             printHelp()
             if(!helpCheck)
                 throw new IllegalArgumentException("Argument configuration format violated.")
-            Map[String, Option[_]]()
+            Map[String, Any]()
         } else
             parseArgs(strArgs.toList, Map())
     }
