@@ -85,3 +85,26 @@ Pass some arguments and watch the results
 	
 */
 ```
+
+*You can also use an alternative syntax :*
+```scala
+val prog = program("Program name") 
+    .title("- Just a demo")
+    .usage("Pass some arguments and watch the results")
+    .arguments (
+    	argument("name")
+    	    .description("Your first or last name.")
+    	    .mandatory
+    	    .perform { x => println("Hello " + x+ "!") },
+    	argument("age")
+    	    .as[Int]{_.toInt}
+    	    .short("a")
+    	    .description("Your age.")
+    	    .mandatory
+    	    .perform {x: Int => println(x)},
+    	argument("greet")
+    	    .empty
+    	    .description("Receive a special greeting.")
+    	    .perform { _ => println("Hey dude !!") }
+    )
+```
