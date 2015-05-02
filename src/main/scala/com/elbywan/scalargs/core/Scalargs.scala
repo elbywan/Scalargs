@@ -216,6 +216,8 @@ case class Program(name: String, titleDesc: String = "", longDesc: String = "", 
             printHelp()
             if(!helpCheck)
                 throw new IllegalArgumentException("Argument configuration format violated.")
+            else
+                System.exit(0)
             Map[String, Any]()
         } else
             parseArgs(strArgs.toList, Map())
